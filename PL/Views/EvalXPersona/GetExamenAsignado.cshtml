@@ -1,0 +1,46 @@
+﻿@model BL.EvalXPersona
+@{
+    ViewBag.Title = "GetExamenAsignado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Examenes asignados</h2>
+
+<hr />
+
+@if (Model.EvalxPersonas != null)
+{   
+        <a class="btn btn-success" href="@Url.Action("GetExamenNoAsignado","EvalXPersona", new {IdPersona = Model.Persona.IdPersona})">Agregar nuevo Examen</a>
+
+        <div class="col-md-3">
+            @foreach (BL.EvalXPersona evalXPersona in Model.EvalxPersonas)
+            {
+                <div class="card" style="width: 18rem;">
+                    <img src="https://images.ecestaticos.com/elX4lEynsj-sSkaQjKArK1T4nHM=/67x0:2638x1806/992x700/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2F4d6%2F1cb%2F5b7%2F4d61cb5b72939a8359978792a5280e46.jpg" class="card-img-top" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title">@evalXPersona.Examen.Descripcion</h5>
+                        <p class="card-text">
+                            @evalXPersona.Persona.Nombre
+                            @evalXPersona.Persona.ApellidoPaterno
+                            @evalXPersona.Persona.ApelldioMaterno
+                            <br />
+                            Dia de la prueba:
+                            <br />
+                            @evalXPersona.FechaAsignacion.ToString("dd-MM-yyyy")
+                        </p>
+                        <a href="@Url.Action("Delete", "EvalXPersona", new { IdEvalxPersona = evalXPersona.IdEvalxPersona })"
+                           onclick="return confirm('Estas seguro de eliminar esta asigancion de examen');"
+                           class="btn btn-danger">Eliminar examen</a>
+                    </div>
+                </div>
+            }
+        </div>
+    
+}
+else
+{
+    <div class="alert alert-danger" role="alert">
+        Esta persona aun no tiene examenes
+    </div>
+}
+

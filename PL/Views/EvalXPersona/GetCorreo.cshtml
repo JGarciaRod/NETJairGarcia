@@ -1,0 +1,46 @@
+﻿<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="http://bootboxjs.com/bootbox.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+
+@model BL.EvalXPersona
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Datos generales</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-3">
+                    @if (Model.Persona.Imagen == "" || Model.Persona.Imagen == null)
+                    {
+
+                        <img src="https://www.computerhope.com/jargon/g/guest-user.png" width="50" height="50" />
+                    }
+                    else
+                    {
+                        <img src="data:image/*;base64,@Model.Persona.Imagen" width="50" height="50" />
+                    }
+                </div>
+
+                @Model.Persona.Nombre
+                @Model.Persona.ApellidoPaterno
+                @Model.Persona.ApelldioMaterno
+                <hr />
+                @Model.Persona.Correo
+            </div>
+            <div class="modal-footer">
+                <a href="@Url.Action("GetAll","Persona")" class="btn btn-success">Regresar</a>
+                <a class="btn btn-light" href="@Url.Action("GetExamenAsignado","EvalXPersona", new {IdPersona = Model.Persona.IdPersona})">Examenes</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#exampleModal').modal('show');
+</script>

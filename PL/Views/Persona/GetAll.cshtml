@@ -1,0 +1,70 @@
+﻿@model BL.Persona
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Personas</h2>
+<hr />
+
+@if (Model.Personas != null)
+{
+    using (Html.BeginForm("GetCorreo", "EvalXPersona", FormMethod.Get, new { enctype = "multipart/form-data" }))
+    {
+        <div class="input-group mb-3">
+            @Html.TextBoxFor(model => model.Correo, new { @class = "form-cntrol", @placeholder = "Correo" })
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Buscar</button>
+        </div>
+    }
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                        <th>IdPersona</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Correo</th>
+                        <th>Imagen</th>
+                        <th>Consular</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (BL.Persona persona in Model.Personas)
+                    {
+                        <tr>
+                            <td>@persona.IdPersona</td>
+                            <td>@persona.Nombre</td>
+                            <td>@persona.ApellidoPaterno <br /> @persona.ApelldioMaterno </td>
+                            <td>@persona.Correo</td>
+                            <td>
+                                @if (persona.Imagen == "" || persona.Imagen == null)
+                                {
+
+                                    <img src="https://www.computerhope.com/jargon/g/guest-user.png" width="50" height="50" />
+                                }
+                                else
+                                {
+                                    <img src="data:image/*;base64,@persona.Imagen" width="50" height="50" />
+                                }
+                            </td>
+                            <td>
+                                <a class="btn btn-light" href="@Url.Action("GetExamenAsignado","EvalXPersona", new {IdPersona = persona.IdPersona})">Examenes</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger" role="alert">
+        Aun no hay usuarios
+    </div>
+}
+
+
